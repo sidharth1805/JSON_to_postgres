@@ -2,7 +2,7 @@ import os
 import sys
 
 from read import get_json_reader
-from write import load_db_table
+from write_df import load_db_table
 
 
 def process_table(BASE_DIR, conn, table_name):
