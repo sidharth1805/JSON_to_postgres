@@ -1,4 +1,6 @@
 import os
+import sys
+
 from read import get_json_reader
 from write import load_db_table
 
@@ -11,7 +13,7 @@ def process_table(BASE_DIR, conn, table_name):
 
 def main():
     BASE_DIR = os.environ.get('BASE_DIR')
-    table_name = os.environ.get('TABLE_NAME')
+    table_name = sys.argv[1].split(',')
 
     configs = dict(os.environ.items())
     conn = f'postgresql://{configs["DB_USER"]}:{configs["DB_PASS"]}@{configs["DB_HOST"]}:{configs["DB_PORT"]}/{configs["DB_NAME"]}'
