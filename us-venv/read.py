@@ -1,12 +1,16 @@
+import os
 import pandas as pd
 
-def main():
-    fp = 'C:/work_dir/data_copier_data/retail_db_json/order_items/part-r-00000-6b83977e-3f20-404b-9b5f-29376ab1419e'
-    json_reader = pd.read_json(fp, lines=True, chunksize=500)
+
+def get_json_reader(BASE_DIR, table_name, chunksize=1000):
+    file_name = os.listdir(f'{BASE_DIR}/{table_name}')[0]
+    fp = f'{BASE_DIR}/{table_name}/{file_name}'
+    return pd.read_json(fp, lines=True, chunksize=chunksize)
+
+
+if __name__ == '__main__':
+    BASE_DIR = os.environ.get('BASE_DIR')
+    table_name = os.environ.get('TABLE_NAME')
+    json_reader = get_json_reader(BASE_DIR, table_name)
     for idx, df in enumerate(json_reader):
         print(f'Number of records in chunk with index {idx} is {df.shape[0]}')
-
-
-
-if __name__ == "__main__":
-    main()
